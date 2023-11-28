@@ -7,6 +7,10 @@
 
 ## dotfiles install
 
+```shell
+git clone https://github.com/hengstchon/dotfiles.git ~/.dotfiles
+```
+
 All packages:
 
 ```toml
