@@ -1,2 +1,5 @@
 [git.variables]
 git_credential = "store"
+
+[zsh.variables]
+zsh_theme = "simple"
