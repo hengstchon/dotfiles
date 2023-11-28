@@ -1,14 +1,22 @@
+## Requirement tools
+
+- zoxide
+- fzf
+- rg
+- delta
+
+## dotfiles install
+
 All packages:
 
 ```toml
 packages = [
 # shell
-"git", "zsh", "tmux", "neovim", "ranger", 
+"git", "zsh", "tmux", "neovim", "ranger",
 # gui
 "alacritty", "karabiner", "phoenix", "mpv", "zathura"
 ]
 ```
-
 
 `.dotter/local.toml` example:
 
@@ -17,7 +25,7 @@ includes = [".dotter/include/mba.toml"]
 
 packages = [
 # shell
-"git", "zsh", "tmux", "neovim", "ranger", 
+"git", "zsh", "tmux", "neovim", "ranger",
 # gui
 "alacritty", "mpv"
 ]
@@ -25,4 +33,20 @@ packages = [
 [variables]
 git_username = "xxx"
 git_email = "xxx"
+```
+
+## Setup
+
+### ranger
+
+Install devicons:
+
+```shell
+git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+```
+
+zoxide integration:
+
+```shell
+git clone git@github.com:jchook/ranger-zoxide.git ~/.config/ranger/plugins/zoxide
 ```
