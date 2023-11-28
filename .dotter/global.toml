@@ -1,0 +1,47 @@
+############### SHELL ###############
+
+[git.files]
+git = "~/.config/git"
+
+[git.variables]
+git_credential = "osxkeychain"
+git_username = "YOUR_NAME"
+git_email = "YOUR_EMAIL"
+
+[zsh.files]
+"zsh/zshrc" = "~/.zshrc"
+
+[zsh.variables]
+zsh_theme = "ys"
+
+[tmux.files]
+tmux = "~/.config/tmux"
+
+[neovim.files]
+nvim = "~/.config/nvim"
+
+[ranger.files]
+ranger = "~/.config/ranger"
+
+
+############### GUI ###############
+
+[alacritty.files]
+alacritty = "~/.config/alacritty"
+
+[karabiner.files]
+karabiner = "~/.config/karabiner"
+
+[phoenix.files]
+phoenix = "~/.config/phoenix"
+
+[mpv.files]
+mpv = "~/.config/mpv"
+
+[mpv.variables]
+# options: "default-cache", "big-cache"
+cache_profile = "default-cache"
+
+[zathura.files]
+zathura = "~/.config/zathura"
+
