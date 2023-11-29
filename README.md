@@ -52,5 +52,5 @@ git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger
 zoxide integration:
 
 ```shell
-git clone git@github.com:jchook/ranger-zoxide.git ~/.config/ranger/plugins/zoxide
+git clone https://github.com/jchook/ranger-zoxide.git ~/.config/ranger/plugins/zoxide
 ```
