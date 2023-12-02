@@ -1,9 +1,9 @@
 ## Requirement tools
 
-- zoxide
-- fzf
-- rg
-- delta
+- [zoxide](https://github.com/ajeetdsouza/zoxide)
+- [fzf](https://github.com/junegunn/fzf)
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [delta](https://github.com/dandavison/delta)
 
 ## dotfiles install
 
