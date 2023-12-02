@@ -221,6 +221,7 @@ return {
 					typescript = { "prettierd" },
 					javascriptreact = { "prettierd" },
 					typescriptreact = { "prettierd" },
+					markdown = { "prettierd" },
 					lua = { "stylua" },
 					-- Conform will run multiple formatters sequentially
 					python = { "isort", "black" },
