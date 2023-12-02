@@ -41,6 +41,20 @@ git_email = "xxx"
 
 ## Setup
 
+### zsh
+
+Install `zsh-autosuggestions`:
+
+```shell
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+Install `zsh-syntax-highlighting`:
+
+```shell
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
 ### ranger
 
 Install devicons:
