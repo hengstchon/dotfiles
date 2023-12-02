@@ -1,9 +1,4 @@
 return {
-  -- typescript
-  {
-    'jose-elias-alvarez/typescript.nvim',
-  },
-
   -- json
   {
     'b0o/schemastore.nvim',
@@ -84,17 +79,6 @@ return {
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
         vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-        -- vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, bufopts)
-        -- if client.supports_method("textDocument/formatting") then
-        --   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-        --   vim.api.nvim_create_autocmd("BufWritePre", {
-        --     pattern = { '*.tsx', '*.ts' },
-        --     group = augroup,
-        --     callback = function()
-        --       vim.lsp.buf.format()
-        --     end,
-        --   })
-        -- end
       end
 
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -182,26 +166,6 @@ return {
       }
     end
   },
-
-  -- formatting & diagnostics
-  -- {
-  --   'jose-elias-alvarez/null-ls.nvim',
-  --   event = "BufReadPre",
-  --   dependencies = { "mason.nvim", "typescript.nvim" },
-  --   opts = function()
-  --     local nls = require('null-ls')
-  --     local formatting = nls.builtins.formatting
-  --     local diagnostics = nls.builtins.diagnostics
-  --     return {
-  --       sources = {
-  --         formatting.prettierd,
-  --         formatting.black,
-  --         diagnostics.eslint_d,
-  --         require("typescript.extensions.null-ls.code-actions"),
-  --       },
-  --     }
-  --   end
-  -- },
 
   -- linting
   {
