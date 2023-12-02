@@ -84,17 +84,17 @@ return {
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
         vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-        vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, bufopts)
-        if client.supports_method("textDocument/formatting") then
-          vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            pattern = { '*.tsx', '*.ts' },
-            group = augroup,
-            callback = function()
-              vim.lsp.buf.format()
-            end,
-          })
-        end
+        -- vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, bufopts)
+        -- if client.supports_method("textDocument/formatting") then
+        --   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+        --   vim.api.nvim_create_autocmd("BufWritePre", {
+        --     pattern = { '*.tsx', '*.ts' },
+        --     group = augroup,
+        --     callback = function()
+        --       vim.lsp.buf.format()
+        --     end,
+        --   })
+        -- end
       end
 
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -184,23 +184,111 @@ return {
   },
 
   -- formatting & diagnostics
+  -- {
+  --   'jose-elias-alvarez/null-ls.nvim',
+  --   event = "BufReadPre",
+  --   dependencies = { "mason.nvim", "typescript.nvim" },
+  --   opts = function()
+  --     local nls = require('null-ls')
+  --     local formatting = nls.builtins.formatting
+  --     local diagnostics = nls.builtins.diagnostics
+  --     return {
+  --       sources = {
+  --         formatting.prettierd,
+  --         formatting.black,
+  --         diagnostics.eslint_d,
+  --         require("typescript.extensions.null-ls.code-actions"),
+  --       },
+  --     }
+  --   end
+  -- },
+
+  -- linting
   {
-    'jose-elias-alvarez/null-ls.nvim',
-    event = "BufReadPre",
-    dependencies = { "mason.nvim", "typescript.nvim" },
-    opts = function()
-      local nls = require('null-ls')
-      local formatting = nls.builtins.formatting
-      local diagnostics = nls.builtins.diagnostics
-      return {
-        sources = {
-          formatting.prettierd,
-          formatting.black,
-          diagnostics.eslint_d,
-          require("typescript.extensions.null-ls.code-actions"),
-        },
+    'mfussenegger/nvim-lint',
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local lint = require("lint")
+
+      lint.linters_by_ft = {
+        javascript = { "eslint_d" },
+        typescript = { "eslint_d" },
+        javascriptreact = { "eslint_d" },
+        typescriptreact = { "eslint_d" },
       }
+
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+        callback = function()
+          lint.try_lint()
+        end,
+      })
     end
+  },
+
+  -- formatting
+  {
+    'stevearc/conform.nvim',
+    event = { "BufReadPre", "BufNewFile" },
+    keys = {
+      {
+        "<leader>fm",
+        function()
+          require("conform").format({ lsp_fallback = true })
+        end,
+        mode = "",
+        desc = "Format buffer",
+      },
+    },
+    config = function()
+      local conform = require("conform")
+
+      conform.setup({
+        formatters_by_ft = {
+          javascript = { "prettierd" },
+          typescript = { "prettierd" },
+          javascriptreact = { "prettierd" },
+          typescriptreact = { "prettierd" },
+          lua = { "stylua" },
+          -- Conform will run multiple formatters sequentially
+          python = { "isort", "black" },
+        },
+        format_on_save = function(bufnr)
+          -- Disable autoformat on certain filetypes
+          local ignore_filetypes = { "php", "sql", "java" }
+          if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
+            return
+          end
+          -- Disable with a global or buffer-local variable
+          if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+            return
+          end
+          -- Disable autoformat for files in a certain path
+          local bufname = vim.api.nvim_buf_get_name(bufnr)
+          if bufname:match("/node_modules/") then
+            return
+          end
+          return { lsp_fallback = true }
+        end,
+      })
+
+      vim.api.nvim_create_user_command("FormatDisable", function(args)
+        if args.bang then
+          -- FormatDisable! will disable formatting just for this buffer
+          vim.b.disable_autoformat = true
+        else
+          vim.g.disable_autoformat = true
+        end
+      end, {
+        desc = "Disable autoformat-on-save",
+        bang = true,
+      })
+      vim.api.nvim_create_user_command("FormatEnable", function()
+        vim.b.disable_autoformat = false
+        vim.g.disable_autoformat = false
+      end, {
+        desc = "Re-enable autoformat-on-save",
+      })
+    end,
   },
 
 }
