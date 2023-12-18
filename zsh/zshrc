@@ -75,6 +75,7 @@ git
 macos
 colored-man-pages
 vi-mode
+extract
 fzf
 zsh-autosuggestions
 zsh-syntax-highlighting
