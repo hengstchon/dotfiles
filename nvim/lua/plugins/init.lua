@@ -1,5 +1,5 @@
 return {
-  "nvim-lua/plenary.nvim",      -- Common utilities
+  "nvim-lua/plenary.nvim",       -- Common utilities
   "nvim-tree/nvim-web-devicons", -- Icons
 
   -- Colorscheme

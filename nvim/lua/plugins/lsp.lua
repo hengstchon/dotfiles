@@ -44,9 +44,9 @@ return {
           focusable = false,
           border = "rounded",
           -- from vim.diagnostic.open_float()
-          header = "",  -- default: Diagnostics
+          header = "",       -- default: Diagnostics
           source = "always", -- show source if truthy
-          prefix = "",  -- default: list number
+          prefix = "",       -- default: list number
         },
       })
 
