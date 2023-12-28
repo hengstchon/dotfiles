@@ -32,6 +32,14 @@ return {
         section_separators = "",
         component_separators = "|",
       },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'codeium#GetStatusString', 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+      },
       extensions = { "nvim-tree" },
     },
   },
@@ -154,5 +162,17 @@ return {
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
       end,
     },
+  },
+
+  -- codeium
+  {
+    'Exafunction/codeium.vim',
+    event = 'BufEnter',
+
+    config = function()
+      vim.keymap.set("i", "<M-CR>", function()
+        return vim.fn["codeium#Accept"]()
+      end, { expr = true, silent = true })
+    end,
   },
 }
