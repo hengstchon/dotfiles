@@ -1,9 +1,10 @@
-## Requirement tools
+## Requirements
 
 - [zoxide](https://github.com/ajeetdsouza/zoxide)
 - [fzf](https://github.com/junegunn/fzf)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [delta](https://github.com/dandavison/delta)
+- Font: [sarasa-fixed-sc-nerd-font](https://github.com/jonz94/Sarasa-Gothic-Nerd-Fonts/releases)
 
 ## dotfiles install
 
