@@ -79,6 +79,7 @@ extract
 fzf
 zsh-autosuggestions
 zsh-syntax-highlighting
+zsh-proxy
 )
 
 source $ZSH/oh-my-zsh.sh
