@@ -140,6 +140,7 @@ alias ra=ranger
 alias v=nvim
 alias lg=lazygit
 alias yt-dlp-de="yt-dlp -f 'bestvideo[height<=720]+bestaudio/best' --merge-output-format mkv --write-subs --sub-langs de,zh --embed-subs"
+alias mpv-de="mpv --secondary-sid=auto --secondary-sub-pos=90"
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
