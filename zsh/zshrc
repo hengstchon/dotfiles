@@ -139,6 +139,7 @@ bindkey -M viins '^B' backward-char
 alias ra=ranger
 alias v=nvim
 alias lg=lazygit
+alias yt-dlp-de="yt-dlp -f 'bestvideo[height<=720]+bestaudio/best' --merge-output-format mkv --write-subs --sub-langs de,zh --embed-subs"
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
