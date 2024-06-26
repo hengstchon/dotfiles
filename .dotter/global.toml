@@ -45,3 +45,5 @@ cache_profile = "default-cache"
 [zathura.files]
 zathura = "~/.config/zathura"
 
+[aerospace.files]
+aerospace = "~/.config/aerospace"
