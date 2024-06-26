@@ -29,6 +29,9 @@ ranger = "~/.config/ranger"
 [alacritty.files]
 alacritty = "~/.config/alacritty"
 
+[kitty.files]
+kitty = "~/.config/kitty"
+
 [karabiner.files]
 karabiner = "~/.config/karabiner"
 
