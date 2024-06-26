@@ -211,3 +211,23 @@ run = ['layout floating']
 if.app-id = 'org.pqrs.Karabiner-EventViewer'
 run = ['layout floating']
 
+[[on-window-detected]]
+if.app-id = 'com.colliderli.iina'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = ['move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Dictionary'
+run = ['move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-id = 'com.eusoft.dehelper'
+run = ['move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-id = 'ru.keepcoder.Telegram'
+run = ['move-node-to-workspace 10']
+
