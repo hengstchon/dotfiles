@@ -1,99 +1,98 @@
-[colors.bright]
-black = "#6e6a86"
-blue = "#31748f"
-cyan = "#ebbcba"
-green = "#9ccfd8"
-magenta = "#c4a7e7"
-red = "#eb6f92"
-white = "#e0def4"
-yellow = "#f6c177"
-
-[colors.cursor]
-cursor = "#524f67"
-text = "#e0def4"
-
-[colors.dim]
-black = "#6e6a86"
-blue = "#31748f"
-cyan = "#ebbcba"
-green = "#9ccfd8"
-magenta = "#c4a7e7"
-red = "#eb6f92"
-white = "#e0def4"
-yellow = "#f6c177"
-
-[colors.footer_bar]
-background = "#1f1d2e"
-foreground = "#e0def4"
-
-[colors.hints.end]
-background = "#1f1d2e"
-foreground = "#6e6a86"
-
-[colors.hints.start]
-background = "#1f1d2e"
-foreground = "#908caa"
-
-[colors.line_indicator]
-background = "None"
-foreground = "None"
-
-[colors.normal]
-black = "#26233a"
-blue = "#31748f"
-cyan = "#ebbcba"
-green = "#9ccfd8"
-magenta = "#c4a7e7"
-red = "#eb6f92"
-white = "#e0def4"
-yellow = "#f6c177"
-
-[colors.primary]
-background = "#191724"
-bright_foreground = "#e0def4"
-dim_foreground = "#908caa"
-foreground = "#e0def4"
-
-[colors.search.focused_match]
-background = "#ebbcba"
-foreground = "#191724"
-
-[colors.search.matches]
-background = "#26233a"
-foreground = "#908caa"
-
-[colors.selection]
-background = "#403d52"
-text = "#e0def4"
-
-[colors.vi_mode_cursor]
-cursor = "#524f67"
-text = "#e0def4"
-
 [env]
 TERM = "xterm-256color"
-
-[font]
-size = 16.0
-
-[font.bold]
-style = "SemiBold"
-
-[font.normal]
-family = "Sarasa Fixed SC Nerd Font"
-style = "Light"
-
-[[keyboard.bindings]]
-action = "ToggleSimpleFullscreen"
-key = "Return"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u001E"
-key = "Key6"
-mods = "Control"
 
 [window]
 decorations = "None"
 opacity = 0.9
+blur = true
 option_as_alt = "Both"
+
+[font]
+normal = { family = "Sarasa Fixed SC Nerd Font", style = "Light" }
+bold = { style = "SemiBold" }
+size = 16.0
+
+[keyboard]
+bindings = [
+    # { key = "Return", mods = "Command", action = "ToggleSimpleFullscreen" },
+    { key = "Key6", mods = "Control", chars = "\u001E" },
+]
+
+
+# Colors section of "Alacritty - TOML configuration file format"
+# https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd#colors
+
+# https://github.com/rose-pine/alacritty/blob/main/dist/rose-pine.toml
+
+[colors.primary]
+foreground = "#e0def4"
+background = "#191724"
+dim_foreground = "#908caa"
+bright_foreground = "#e0def4"
+
+[colors.cursor]
+text = "#e0def4"
+cursor = "#524f67"
+
+[colors.vi_mode_cursor]
+text = "#e0def4"
+cursor = "#524f67"
+
+[colors.search.matches]
+foreground = "#908caa"
+background = "#26233a"
+
+[colors.search.focused_match]
+foreground = "#191724"
+background = "#ebbcba"
+
+[colors.hints.start]
+foreground = "#908caa"
+background = "#1f1d2e"
+
+[colors.hints.end]
+foreground = "#6e6a86"
+background = "#1f1d2e"
+
+[colors.line_indicator]
+foreground = "None"
+background = "None"
+
+[colors.footer_bar]
+foreground = "#e0def4"
+background = "#1f1d2e"
+
+[colors.selection]
+text = "#e0def4"
+background = "#403d52"
+
+[colors.normal]
+black = "#26233a"
+red = "#eb6f92"
+green = "#31748f"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ebbcba"
+white = "#e0def4"
+
+[colors.bright]
+black = "#6e6a86"
+red = "#eb6f92"
+green = "#31748f"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ebbcba"
+white = "#e0def4"
+
+[colors.dim]
+black = "#6e6a86"
+red = "#eb6f92"
+green = "#31748f"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ebbcba"
+white = "#e0def4"
+
