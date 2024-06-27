@@ -19,7 +19,7 @@ packages = [
 # shell
 "git", "zsh", "tmux", "neovim", "ranger",
 # gui
-"alacritty", "karabiner", "phoenix", "mpv", "zathura"
+"alacritty", "karabiner", "phoenix", "mpv", "zathura", "aerospace"
 ]
 ```
 
