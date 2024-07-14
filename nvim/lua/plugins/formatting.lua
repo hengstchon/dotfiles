@@ -24,7 +24,7 @@ return {
           markdown = { "prettierd" },
           lua = { "stylua" },
           -- Conform will run multiple formatters sequentially
-          python = { "ruff_lsp", "isort", "black" },
+          python = { "isort", "black" },
         },
         format_on_save = function(bufnr)
           -- Disable autoformat on certain filetypes
