@@ -22,9 +22,8 @@ return {
           javascriptreact = { "prettierd" },
           typescriptreact = { "prettierd" },
           markdown = { "prettierd" },
-          lua = { "stylua" },
           -- Conform will run multiple formatters sequentially
-          python = { "isort", "black" },
+          python = { "ruff_organize_imports", "ruff_format" },
         },
         format_on_save = function(bufnr)
           -- Disable autoformat on certain filetypes
