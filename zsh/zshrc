@@ -139,7 +139,8 @@ bindkey -M viins '^B' backward-char
 alias ra=ranger
 alias v=nvim
 alias lg=lazygit
-alias yt-dlp-de="yt-dlp -f 'bestvideo[height<=720]+bestaudio/best' --merge-output-format mkv --write-subs --write-auto-subs --sub-langs de,zh --embed-subs"
+# https://github.com/yt-dlp/yt-dlp/issues/630#issuecomment-893659460
+alias yt-dlp-de="yt-dlp -f 'bestvideo[height<=720]+bestaudio/best' --merge-output-format mkv --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs --sub-langs de,zh"
 alias mpv-de="mpv --secondary-sid=auto --secondary-sub-pos=90"
 
 # pnpm
