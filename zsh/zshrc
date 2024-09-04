@@ -142,7 +142,7 @@ alias ra=ranger
 alias v=nvim
 alias lg=lazygit
 # https://github.com/yt-dlp/yt-dlp/issues/630#issuecomment-893659460
-alias yt-dlp-de="yt-dlp -S 'res:720' --merge-output-format mkv --write-subs --write-auto-subs --sub-langs de,deu,zh"
+alias yt-dlp-de="yt-dlp -S 'res:720' --merge-output-format mkv --write-subs --write-auto-subs --sub-langs de,deu,de-DE,zh"
 alias mpv-de="mpv --secondary-sid=auto --secondary-sub-pos=90"
 
 # pnpm
