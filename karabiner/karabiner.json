@@ -98,11 +98,11 @@
                         ]
                     },
                     {
-                        "description": "Control+Command+Delete to start Screen Saver",
+                        "description": "Control+Command+Backspace to start Screen Saver",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "delete_forward",
+                                    "key_code": "delete_or_backspace",
                                     "modifiers": {
                                         "mandatory": [
                                             "control",
