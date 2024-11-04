@@ -82,6 +82,35 @@ return {
             capabilities = capabilities,
           })
         end,
+        ["angularls"] = function()
+          local ok, mason_registry = pcall(require, 'mason-registry')
+          if not ok then
+            vim.notify('mason-registry could not be loaded')
+            return
+          end
+
+          local angularls_path = mason_registry.get_package('angular-language-server'):get_install_path()
+
+          --tsProbeLocations: Path of typescript. Required.
+          --ngProbeLocations: Path of @angular/language-service. Required.
+          local cmd = {
+            'ngserver',
+            '--stdio',
+            '--tsProbeLocations',
+            angularls_path .. ',' .. vim.fn.getcwd(),
+            '--ngProbeLocations',
+            angularls_path .. '/node_modules/@angular/language-server'
+          }
+
+          nvim_lsp.angularls.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            cmd = cmd,
+            on_new_config = function(new_config, new_root_dir)
+              new_config.cmd = cmd
+            end,
+          })
+        end,
         ["lua_ls"] = function()
           nvim_lsp.lua_ls.setup({
             on_attach = on_attach,
