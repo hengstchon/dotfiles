@@ -79,7 +79,7 @@ extract
 fzf
 zsh-autosuggestions
 zsh-syntax-highlighting
-zsh-proxy
+# zsh-proxy
 )
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
