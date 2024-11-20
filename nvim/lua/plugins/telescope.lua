@@ -11,12 +11,14 @@ return {
       local telescope = require("telescope")
       local builtin = require("telescope.builtin")
       local actions = require("telescope.actions")
+      local actions_layout = require("telescope.actions.layout")
 
       telescope.setup({
         defaults = {
           mappings = {
             i = {
               ["<esc>"] = actions.close,
+              ["<C-y>"] = actions_layout.toggle_preview,
             },
           },
         },
