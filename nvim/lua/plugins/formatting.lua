@@ -21,7 +21,13 @@ return {
           typescript = { "prettierd" },
           javascriptreact = { "prettierd" },
           typescriptreact = { "prettierd" },
+          angular = { "prettierd" },
+          html = { "prettierd" },
+          css = { "prettierd" },
+          scss = { "prettierd" },
           markdown = { "prettierd" },
+          json = { "prettierd" },
+          yaml = { "prettierd" },
           -- Conform will run multiple formatters sequentially
           python = { "ruff_organize_imports", "ruff_format" },
         },
