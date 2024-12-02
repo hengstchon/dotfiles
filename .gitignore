@@ -29,3 +29,5 @@ Temporary Items
 .dotter/local.toml
 .dotter/cache.toml
 .dotter/cache
+
+karabiner/automatic_backups

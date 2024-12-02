@@ -30,7 +30,8 @@ ranger = "~/.config/ranger"
 alacritty = "~/.config/alacritty"
 
 [karabiner.files]
-karabiner = "~/.config/karabiner"
+# create folder symlink instead of files symlink
+karabiner = { type = "symbolic", target="~/.config/karabiner", recurse = false }
 
 [phoenix.files]
 phoenix = "~/.config/phoenix"
