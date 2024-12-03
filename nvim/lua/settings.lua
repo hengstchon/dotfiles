@@ -3,7 +3,9 @@ vim.opt.clipboard:append("unnamedplus")                 -- Copy/paste to system 
 vim.opt.swapfile = false                                -- Don't use swapfile
 vim.opt.completeopt = { "menu", "menuone", "noselect" } -- Autocomplete options
 
-vim.wo.number = true                                    -- Show line number
+vim.opt.number = true                                   -- Show line number
+vim.opt.relativenumber = true                           -- Relative line numbers
+vim.opt.scrolloff = 4                                   -- Lines of context
 vim.opt.signcolumn = "yes"                              -- always show
 vim.opt.splitright = true                               -- Vertical split to the right
 vim.opt.splitbelow = true                               -- Orizontal split to the bottom
