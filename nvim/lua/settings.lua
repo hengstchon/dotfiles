@@ -23,6 +23,10 @@ vim.opt.shiftwidth = 4                                  -- Shift 2 spaces when (
 vim.opt.updatetime = 50                                 -- ms to wait for trigger an event
 vim.opt.shortmess:append("I")                           -- Disable nvim intro
 
+-- Fold
+vim.opt.foldmethod = 'indent'
+vim.opt.foldlevel = 99
+
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
