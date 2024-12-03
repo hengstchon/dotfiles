@@ -12,7 +12,7 @@ return {
       end,
     },
     keys = {
-      { "<leader>at", "<cmd>AerialToggle!<CR>", desc = "Aerial Toggle" },
+      { "<leader>ta", "<cmd>AerialToggle!<CR>", desc = "Aerial Toggle" },
     },
   },
 }
