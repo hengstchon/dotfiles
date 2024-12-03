@@ -22,6 +22,14 @@ return {
       { "<C-n>",     ":NvimTreeToggle<CR>",   silent = true },
       { "<leader>n", ":NvimTreeFindFile<CR>", silent = true },
     },
+    opts = {
+      view = {
+        adaptive_size = true,
+        width = {
+          max = 80
+        }
+      }
+    }
   },
 
   -- Comment
