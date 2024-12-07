@@ -5,7 +5,7 @@
                 "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
                 "rules": [
                     {
-                        "description": "Post  caps_lock if fn is pressed alone",
+                        "description": "Post ctrl + space if fn is pressed alone",
                         "manipulators": [
                             {
                                 "from": {
@@ -18,7 +18,12 @@
                                         "lazy": true
                                     }
                                 ],
-                                "to_if_alone": [{ "key_code": "caps_lock" }],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
                                 "type": "basic"
                             }
                         ]
