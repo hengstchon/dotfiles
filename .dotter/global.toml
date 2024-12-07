@@ -29,6 +29,9 @@ ranger = "~/.config/ranger"
 [alacritty.files]
 alacritty = "~/.config/alacritty"
 
+[kitty.files]
+kitty = { type = "symbolic", target = "~/.config/kitty", recurse = false }
+
 [karabiner.files]
 # create folder symlink instead of files symlink
 karabiner = { type = "symbolic", target="~/.config/karabiner", recurse = false }

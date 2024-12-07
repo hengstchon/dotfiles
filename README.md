@@ -4,7 +4,8 @@
 - [fzf](https://github.com/junegunn/fzf)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [delta](https://github.com/dandavison/delta)
-- Font: [sarasa-fixed-sc-nerd-font](https://github.com/jonz94/Sarasa-Gothic-Nerd-Fonts/releases)
+- Font (for alacritty): [sarasa-fixed-sc-nerd-font](https://github.com/jonz94/Sarasa-Gothic-Nerd-Fonts/releases)
+- Font (for kitty): [Sarasa Term SC](https://github.com/be5invis/Sarasa-Gothic/releases)
 
 ## dotfiles install
 
@@ -19,7 +20,7 @@ packages = [
 # shell
 "git", "zsh", "tmux", "neovim", "ranger",
 # gui
-"alacritty", "karabiner", "phoenix", "mpv", "zathura", "aerospace"
+"kitty", "alacritty", "karabiner", "phoenix", "mpv", "zathura", "aerospace"
 ]
 ```
 
