@@ -32,6 +32,9 @@ alacritty = "~/.config/alacritty"
 [kitty.files]
 kitty = { type = "symbolic", target = "~/.config/kitty", recurse = false }
 
+[ghostty.files]
+ghostty = "~/.config/ghostty"
+
 [karabiner.files]
 # create folder symlink instead of files symlink
 karabiner = { type = "symbolic", target="~/.config/karabiner", recurse = false }
