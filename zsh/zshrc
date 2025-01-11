@@ -162,3 +162,7 @@ eval "$(zoxide init zsh)"
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# work
+if [ -f "$HOME/work.sh" ]; then
+    source "$HOME/work.sh"
+fi
