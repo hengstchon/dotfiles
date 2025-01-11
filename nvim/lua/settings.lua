@@ -15,6 +15,7 @@ vim.opt.linebreak = true                                -- Wrap on word boundary
 vim.opt.termguicolors = true                            -- Enable 24-bit RGB colors
 vim.opt.showmode = false                                -- Not put a message in insert mode
 vim.opt.fixendofline = false                            -- Not fix EOL
+vim.g.editorconfig = false                              -- Not respect editorconfig
 
 vim.opt.smartindent = true                              -- Autoindent new lines
 vim.opt.expandtab = true                                -- Use spaces instead of tabs

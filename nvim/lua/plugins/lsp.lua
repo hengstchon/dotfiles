@@ -99,7 +99,8 @@ return {
             '--tsProbeLocations',
             angularls_path .. ',' .. vim.fn.getcwd(),
             '--ngProbeLocations',
-            angularls_path .. '/node_modules/@angular/language-server'
+            angularls_path .. '/node_modules/@angular/language-server',
+            '--forceStrictTemplates',
           }
 
           nvim_lsp.angularls.setup({
