@@ -3,3 +3,4 @@ font-family = "Sarasa Fixed SC Nerd Font"
 font-size = 16
 macos-option-as-alt = true
 macos-titlebar-style = hidden
+quit-after-last-window-closed = true
