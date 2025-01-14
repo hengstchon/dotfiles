@@ -226,6 +226,10 @@ if.app-id = 'com.colliderli.iina'
 run = ['layout floating']
 
 [[on-window-detected]]
+if.app-id = 'com.sublimetext.4'
+run = ['layout floating']
+
+[[on-window-detected]]
 if.app-id = 'com.apple.Dictionary'
 run = ['move-node-to-workspace 3']
 
