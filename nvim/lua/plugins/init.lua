@@ -17,7 +17,6 @@ return {
   -- File explorer
   {
     "nvim-tree/nvim-tree.lua",
-    config = true,
     keys = {
       { "<C-n>",     ":NvimTreeToggle<CR>",   silent = true },
       { "<leader>n", ":NvimTreeFindFile<CR>", silent = true },
@@ -28,8 +27,13 @@ return {
         width = {
           max = 80
         }
-      }
-    }
+      },
+      on_attach = function(bufnr)
+        local api = require "nvim-tree.api"
+        api.config.mappings.default_on_attach(bufnr)
+        vim.keymap.del("n", "<C-E>", { buffer = bufnr })
+      end,
+    },
   },
 
   -- Comment
