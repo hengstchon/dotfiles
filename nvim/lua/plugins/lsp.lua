@@ -93,6 +93,9 @@ return {
 
           --tsProbeLocations: Path of typescript. Required.
           --ngProbeLocations: Path of @angular/language-service. Required.
+          --forceStrictTemplates: Forces the language service to use strictTemplates and ignore the user settings in the 'tsconfig.json'.
+          --includeAutomaticOptionalChainCompletions: Shows completions on potentially undefined values that insert an optional chain call. Requires TS 3.7+ and strict null checks to be enabled.
+          --includeCompletionsWithSnippetText: Enables snippet completions from Angular language server;
           local cmd = {
             'ngserver',
             '--stdio',
@@ -101,6 +104,14 @@ return {
             '--ngProbeLocations',
             angularls_path .. '/node_modules/@angular/language-server',
             '--forceStrictTemplates',
+            '--includeAutomaticOptionalChainCompletions',
+            '--includeCompletionsWithSnippetText',
+            '--angularCoreVersion',
+            '18.2.13',
+            -- '--logFile',
+            -- vim.fn.getcwd() .. '/Angular-Language-Service.log',
+            -- '--logVerbosity',
+            -- 'verbose',
           }
 
           nvim_lsp.angularls.setup({
