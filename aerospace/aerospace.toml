@@ -205,42 +205,57 @@ alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
 
+# shottr
 [[on-window-detected]]
 if.app-id = 'cc.ffitch.shottr'
 run = ['layout floating']
 
+# karabiner
 [[on-window-detected]]
 if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
 run = ['layout floating']
 
-[[on-window-detected]]
-if.app-id = 'com.tencent.xinWeChat'
-run = ['layout floating']
-
+# karabiner
 [[on-window-detected]]
 if.app-id = 'org.pqrs.Karabiner-EventViewer'
 run = ['layout floating']
 
+# wechat
+[[on-window-detected]]
+if.app-id = 'com.tencent.xinWeChat'
+run = ['layout floating']
+
+# iina
 [[on-window-detected]]
 if.app-id = 'com.colliderli.iina'
 run = ['layout floating']
 
+# sublime text
 [[on-window-detected]]
 if.app-id = 'com.sublimetext.4'
 run = ['layout floating']
 
+# iphone simulator
+[[on-window-detected]]
+if.app-id = 'com.apple.iphonesimulator'
+run = ['layout floating']
+
+# Dictionary
 [[on-window-detected]]
 if.app-id = 'com.apple.Dictionary'
 run = ['move-node-to-workspace 3']
 
+# dehelper
 [[on-window-detected]]
 if.app-id = 'com.eusoft.dehelper'
 run = ['move-node-to-workspace 3']
 
+# obsidian
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = ['move-node-to-workspace 4']
 
+# telegram
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
 run = ['move-node-to-workspace 10']
