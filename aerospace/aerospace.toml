@@ -240,19 +240,19 @@ run = ['layout floating']
 if.app-id = 'com.apple.iphonesimulator'
 run = ['layout floating']
 
+# obsidian
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = ['move-node-to-workspace 3']
+
 # Dictionary
 [[on-window-detected]]
 if.app-id = 'com.apple.Dictionary'
-run = ['move-node-to-workspace 3']
+run = ['move-node-to-workspace 4']
 
 # dehelper
 [[on-window-detected]]
 if.app-id = 'com.eusoft.dehelper'
-run = ['move-node-to-workspace 3']
-
-# obsidian
-[[on-window-detected]]
-if.app-id = 'md.obsidian'
 run = ['move-node-to-workspace 4']
 
 # telegram
