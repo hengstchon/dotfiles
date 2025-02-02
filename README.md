@@ -1,5 +1,6 @@
 ## Requirements
 
+- [starship](https://github.com/starship/starship)
 - [zoxide](https://github.com/ajeetdsouza/zoxide)
 - [fzf](https://github.com/junegunn/fzf)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
