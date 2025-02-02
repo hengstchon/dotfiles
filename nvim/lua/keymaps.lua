@@ -40,10 +40,10 @@ vim.keymap.set("i", "<M-w>", "<C-c>:w<CR>")
 vim.keymap.set("n", "<M-q>", ":q<CR>")
 
 -- Resize splits with arrow keys
-vim.keymap.set("n", "<up>", ":res +5<CR>")
-vim.keymap.set("n", "<down>", ":res -5<CR>")
-vim.keymap.set("n", "<left>", ":vertical resize-5<CR>")
-vim.keymap.set("n", "<right>", ":vertical resize+5<CR>")
+vim.keymap.set("n", "<up>", ":resize +5<CR>", { desc = "Resize +5" })
+vim.keymap.set("n", "<down>", ":resize -5<CR>", { desc = "Resize -5" })
+vim.keymap.set("n", "<left>", ":vertical resize -5<CR>", { desc = "Vertical Resize -5" })
+vim.keymap.set("n", "<right>", ":vertical resize +5<CR>", { desc = "Vertical Resize +5" })
 
 -- Clear search highlighting
 vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { noremap = true, silent = true })
@@ -51,3 +51,18 @@ vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { noremap = true, silent = true 
 -- Change split orientation
 -- vim.keymap.set('n', '<leader>tk', '<C-w>t<C-w>K') -- change vertical to horizontal
 -- vim.keymap.set('n', '<leader>th', '<C-w>t<C-w>H') -- change horizontal to vertical
+
+-- Quickfix mappings
+vim.keymap.set('n', '<leader>ck', ':cexpr []<cr>', { desc = 'Quickfix: Clear list' })
+vim.keymap.set('n', '<leader>cc', ':cclose <cr>', { desc = 'Quickfix: Close list' })
+vim.keymap.set('n', '<leader>co', ':copen <cr>', { desc = 'Quickfix: Open list' })
+vim.keymap.set('n', '<leader>cf', ':cfdo %s/', { desc = 'Quickfix: Search & Replace' })
+vim.keymap.set('n', '<leader>cp', ':cprev<cr>zz', { desc = 'Quickfix: Prev Item' })
+vim.keymap.set('n', '<leader>cn', ':cnext<cr>zz', { desc = 'Quickfix: Next Item' })
+
+
+-- buffer navigation
+vim.keymap.set('n', '<leader>kp', ':bprev<cr>', { desc = 'Buffer: Prev buffer' })
+vim.keymap.set('n', '<leader>kn', ':bnext<cr>', { desc = 'Buffer: Next buffer' })
+vim.keymap.set('n', '<leader>kd', ':bdelete<cr>', { desc = 'Buffer: Delete buffer' })
+vim.keymap.set('n', '<leader>ko', '<cmd>%bd|e#<cr>', { desc = 'Buffer: Close all buffers but the current one' }) -- https://stackoverflow.com/a/42071865/516188
