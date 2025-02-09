@@ -2,8 +2,15 @@ return {
   {
     'zbirenbaum/copilot.lua',
     event = "InsertEnter",
-    config = true,
+    opts = {
+      suggestion = {
+        keymap = {
+          accept = "<C-l>",
+        }
+      }
+    }
   },
+
 
   -- {
   --   'Exafunction/codeium.vim',
