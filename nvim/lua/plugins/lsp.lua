@@ -91,6 +91,29 @@ return {
 
           local angularls_path = mason_registry.get_package('angular-language-server'):get_install_path()
 
+          local function get_angular_version()
+            local package_json_path = vim.fn.getcwd() .. '/package.json'
+            local default_version = '19.1.6' -- Set default version
+
+            -- Check if package.json exists
+            if vim.fn.filereadable(package_json_path) == 0 then
+              return default_version
+            end
+
+            local package_json_content = vim.fn.readfile(package_json_path)
+            if package_json_content then
+              local package_json = vim.fn.json_decode(table.concat(package_json_content))
+              -- Check @angular/core version in dependencies
+              if package_json and package_json.dependencies and package_json.dependencies["@angular/core"] then
+                -- Remove ^ or ~ from version string
+                local version = string.gsub(package_json.dependencies["@angular/core"], "^[~^]", "")
+                return version
+              end
+            end
+
+            return default_version
+          end
+
           --tsProbeLocations: Path of typescript. Required.
           --ngProbeLocations: Path of @angular/language-service. Required.
           --forceStrictTemplates: Forces the language service to use strictTemplates and ignore the user settings in the 'tsconfig.json'.
@@ -107,7 +130,7 @@ return {
             '--includeAutomaticOptionalChainCompletions',
             '--includeCompletionsWithSnippetText',
             '--angularCoreVersion',
-            '18.2.13',
+            get_angular_version(),
             -- '--logFile',
             -- vim.fn.getcwd() .. '/Angular-Language-Service.log',
             -- '--logVerbosity',
