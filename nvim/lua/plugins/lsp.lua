@@ -23,21 +23,28 @@ return {
     },
     config = function()
       --- diagnostics settings
-      local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "" }
-
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-      end
+      vim.diagnostic.config({
+        severity_sort = true,
+        float = { border = 'rounded', source = 'if_many' },
+        underline = { severity = vim.diagnostic.severity.ERROR },
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = '󰅚 ',
+            [vim.diagnostic.severity.WARN] = '󰀪 ',
+            [vim.diagnostic.severity.INFO] = '󰋽 ',
+            [vim.diagnostic.severity.HINT] = '󰌶 ',
+          },
+        },
+      })
 
       local opts = { noremap = true, silent = true }
       vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+      -- vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+      -- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
       vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 
       vim.diagnostic.config({
-        virtual_text = false,
+        virtual_text = { current_line = true },
         severity_sort = true,
         float = {
           -- from nvim_open_win()
@@ -50,27 +57,30 @@ return {
         },
       })
 
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-
-      vim.lsp.handlers["textDocument/signatureHelp"] =
-          vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+      -- To instead override globally
+      local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+      ---@diagnostic disable-next-line: duplicate-set-field
+      function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or 'rounded'
+        return orig_util_open_floating_preview(contents, syntax, opts, ...)
+      end
 
       local on_attach = function(_, bufnr)
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+        vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, bufopts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+        -- vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, bufopts)
         vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
         vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
         vim.keymap.set("n", "<leader>wl", function()
-          print(vim.inspect(vim.lsp.buf.list_workleader_folders()))
+          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, bufopts)
-        vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+        vim.keymap.set("n", "grd", vim.lsp.buf.type_definition, bufopts)
+        -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+        -- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+        -- vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
       end
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
