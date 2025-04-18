@@ -40,6 +40,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "xml",
     "html",
+    "htmlangular",
     "xhtml",
     "css",
     "scss",

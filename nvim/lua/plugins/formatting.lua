@@ -22,6 +22,7 @@ return {
           javascriptreact = { "prettierd" },
           typescriptreact = { "prettierd" },
           html = { "prettierd" },
+          htmlangular = { "prettierd" },
           css = { "prettierd" },
           scss = { "prettierd" },
           markdown = { "prettierd" },
