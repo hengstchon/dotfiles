@@ -30,6 +30,7 @@ return {
           yaml = { "prettierd" },
           -- Conform will run multiple formatters sequentially
           python = { "ruff_organize_imports", "ruff_format" },
+          lua = { "stylua" },
         },
         format_on_save = function(bufnr)
           -- Disable autoformat on certain filetypes
