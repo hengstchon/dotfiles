@@ -1,4 +1,4 @@
-theme = rose-pine
+theme = dark:Rose Pine,light:Rose Pine Dawn
 font-family = "Sarasa Fixed SC Nerd Font"
 font-size = 16
 macos-option-as-alt = true
