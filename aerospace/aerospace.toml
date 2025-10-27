@@ -235,6 +235,11 @@ run = ['layout floating']
 if.app-id = 'com.sublimetext.4'
 run = ['layout floating']
 
+# zed
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = ['layout floating']
+
 # iphone simulator
 [[on-window-detected]]
 if.app-id = 'com.apple.iphonesimulator'
