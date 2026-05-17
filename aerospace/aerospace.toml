@@ -250,6 +250,11 @@ run = ['layout floating']
 if.app-id = 'md.obsidian'
 run = ['move-node-to-workspace 3']
 
+# chatwise
+[[on-window-detected]]
+if.app-id = 'app.chatwise'
+run = ['move-node-to-workspace 3']
+
 # Dictionary
 [[on-window-detected]]
 if.app-id = 'com.apple.Dictionary'
@@ -259,6 +264,16 @@ run = ['move-node-to-workspace 4']
 [[on-window-detected]]
 if.app-id = 'com.eusoft.dehelper'
 run = ['move-node-to-workspace 4']
+
+# outlook
+[[on-window-detected]]
+if.app-id = 'com.microsoft.Outlook'
+run = ['move-node-to-workspace 9']
+
+# slack
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = ['move-node-to-workspace 10']
 
 # telegram
 [[on-window-detected]]
