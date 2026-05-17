@@ -1,6 +1,4 @@
 -- LSP Plugins
----@module 'lazy'
----@type LazySpec
 return {
   {
     "b0o/schemastore.nvim",
@@ -52,9 +50,11 @@ return {
           map("grr", vim.lsp.buf.references, "[G]oto [R]eferences")
           map("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
           map("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-          map("<leader>wl", function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, "[W]orkspace [L]ist Folders")
+          map(
+            "<leader>wl",
+            function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+            "[W]orkspace [L]ist Folders"
+          )
 
           if client and client:supports_method("textDocument/documentHighlight", event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
@@ -81,9 +81,11 @@ return {
           end
 
           if client and client:supports_method("textDocument/inlayHint", event.buf) then
-            map("<leader>th", function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-            end, "[T]oggle Inlay [H]ints")
+            map(
+              "<leader>th",
+              function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })) end,
+              "[T]oggle Inlay [H]ints"
+            )
           end
         end,
       })
@@ -92,9 +94,7 @@ return {
         local package_json_path = vim.fn.getcwd() .. "/package.json"
         local default_version = "19.1.6"
 
-        if vim.fn.filereadable(package_json_path) == 0 then
-          return default_version
-        end
+        if vim.fn.filereadable(package_json_path) == 0 then return default_version end
 
         local package_json_content = vim.fn.readfile(package_json_path)
         if package_json_content then
@@ -108,15 +108,11 @@ return {
       end
 
       local function get_python_path(workspace)
-        if vim.env.VIRTUAL_ENV then
-          return vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
-        end
+        if vim.env.VIRTUAL_ENV then return vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python") end
 
         for _, pattern in ipairs({ "*", ".*" }) do
           local matches = vim.fn.glob(vim.fs.joinpath(workspace, pattern, "pyvenv.cfg"), false, true)
-          if #matches > 0 then
-            return vim.fs.joinpath(vim.fs.dirname(matches[1]), "bin", "python")
-          end
+          if #matches > 0 then return vim.fs.joinpath(vim.fs.dirname(matches[1]), "bin", "python") end
         end
 
         return vim.fn.exepath("python3") ~= "" and vim.fn.exepath("python3")
@@ -145,11 +141,10 @@ return {
       ---@type table<string, vim.lsp.Config>
       local servers = {
         stylua = {},
+        ts_ls = {},
         angularls = {
           cmd = get_angularls_cmd(),
-          on_new_config = function(new_config)
-            new_config.cmd = get_angularls_cmd()
-          end,
+          on_new_config = function(new_config) new_config.cmd = get_angularls_cmd() end,
         },
         pyright = {
           before_init = function(_, config)
@@ -211,7 +206,8 @@ return {
           on_init = function(client)
             if client.workspace_folders then
               local path = client.workspace_folders[1].name
-              if path ~= vim.fn.stdpath("config")
+              if
+                path ~= vim.fn.stdpath("config")
                 and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
               then
                 return

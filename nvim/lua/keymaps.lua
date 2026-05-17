@@ -22,7 +22,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- Improve copy, cut, paste
 vim.keymap.set("x", "<leader>p", [["_dP]])
-vim.keymap.set({ "n", "v" }, "<leader>d", "\"_d")
+vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')
 
 -- Increment/decrement
 vim.keymap.set("n", "+", "<C-a>")
@@ -53,16 +53,15 @@ vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { noremap = true, silent = true 
 -- vim.keymap.set('n', '<leader>th', '<C-w>t<C-w>H') -- change horizontal to vertical
 
 -- Quickfix mappings
-vim.keymap.set('n', '<leader>ck', ':cexpr []<cr>', { desc = 'Quickfix: Clear list' })
-vim.keymap.set('n', '<leader>cc', ':cclose <cr>', { desc = 'Quickfix: Close list' })
-vim.keymap.set('n', '<leader>co', ':copen <cr>', { desc = 'Quickfix: Open list' })
-vim.keymap.set('n', '<leader>cf', ':cfdo %s/', { desc = 'Quickfix: Search & Replace' })
-vim.keymap.set('n', '<leader>cp', ':cprev<cr>zz', { desc = 'Quickfix: Prev Item' })
-vim.keymap.set('n', '<leader>cn', ':cnext<cr>zz', { desc = 'Quickfix: Next Item' })
-
+vim.keymap.set("n", "<leader>ck", ":cexpr []<cr>", { desc = "Quickfix: Clear list" })
+vim.keymap.set("n", "<leader>cc", ":cclose <cr>", { desc = "Quickfix: Close list" })
+vim.keymap.set("n", "<leader>co", ":copen <cr>", { desc = "Quickfix: Open list" })
+vim.keymap.set("n", "<leader>cf", ":cfdo %s/", { desc = "Quickfix: Search & Replace" })
+vim.keymap.set("n", "<leader>cp", ":cprev<cr>zz", { desc = "Quickfix: Prev Item" })
+vim.keymap.set("n", "<leader>cn", ":cnext<cr>zz", { desc = "Quickfix: Next Item" })
 
 -- buffer navigation
-vim.keymap.set('n', '<leader>kp', ':bprev<cr>', { desc = 'Buffer: Prev buffer' })
-vim.keymap.set('n', '<leader>kn', ':bnext<cr>', { desc = 'Buffer: Next buffer' })
-vim.keymap.set('n', '<leader>kd', ':bdelete<cr>', { desc = 'Buffer: Delete buffer' })
-vim.keymap.set('n', '<leader>ko', '<cmd>%bd|e#<cr>', { desc = 'Buffer: Close all buffers but the current one' }) -- https://stackoverflow.com/a/42071865/516188
+vim.keymap.set("n", "<leader>kp", ":bprev<cr>", { desc = "Buffer: Prev buffer" })
+vim.keymap.set("n", "<leader>kn", ":bnext<cr>", { desc = "Buffer: Next buffer" })
+vim.keymap.set("n", "<leader>kd", ":bdelete<cr>", { desc = "Buffer: Delete buffer" })
+vim.keymap.set("n", "<leader>ko", "<cmd>%bd|e#<cr>", { desc = "Buffer: Close all buffers but the current one" }) -- https://stackoverflow.com/a/42071865/516188
