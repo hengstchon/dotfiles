@@ -96,7 +96,8 @@ return {
         if package_json_content then
           local package_json = vim.fn.json_decode(table.concat(package_json_content))
           if package_json and package_json.dependencies and package_json.dependencies["@angular/core"] then
-            return string.gsub(package_json.dependencies["@angular/core"], "^[~^]", "")
+            local version = string.gsub(package_json.dependencies["@angular/core"], "^[~^]", "")
+            return version
           end
         end
 
