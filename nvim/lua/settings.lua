@@ -15,7 +15,6 @@ vim.opt.linebreak = true -- Wrap on word boundary
 vim.opt.termguicolors = true -- Enable 24-bit RGB colors
 vim.opt.showmode = false -- Not put a message in insert mode
 vim.opt.fixendofline = false -- Not fix EOL
-vim.g.editorconfig = false -- Not respect editorconfig
 
 vim.opt.smartindent = true -- Autoindent new lines
 vim.opt.expandtab = true -- Use spaces instead of tabs
@@ -31,10 +30,12 @@ vim.opt.foldlevel = 99
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
   callback = function() vim.highlight.on_yank() end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("filetype-indent", { clear = true }),
   pattern = {
     "xml",
     "html",
@@ -51,8 +52,8 @@ vim.api.nvim_create_autocmd("FileType", {
     "yaml",
     "prisma",
   },
-  callback = function()
-    vim.opt.tabstop = 2
-    vim.opt.shiftwidth = 2
+  callback = function(args)
+    vim.bo[args.buf].tabstop = 2
+    vim.bo[args.buf].shiftwidth = 2
   end,
 })

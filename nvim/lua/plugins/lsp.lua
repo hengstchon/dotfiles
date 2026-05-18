@@ -31,6 +31,7 @@ return {
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local InstallLocation = require("mason-core.installer.InstallLocation")
       local mason_registry = require("mason-registry")
+      local lsp_highlight_group = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = true })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
@@ -45,9 +46,6 @@ return {
           map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
           map("gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
           map("grd", vim.lsp.buf.type_definition, "[G]oto Type [D]efinition")
-          map("grn", vim.lsp.buf.rename, "[R]e[n]ame")
-          map("gra", vim.lsp.buf.code_action, "[G]oto Code [A]ction", { "n", "x" })
-          map("grr", vim.lsp.buf.references, "[G]oto [R]eferences")
           map("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
           map("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
           map(
@@ -57,26 +55,16 @@ return {
           )
 
           if client and client:supports_method("textDocument/documentHighlight", event.buf) then
-            local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
               buffer = event.buf,
-              group = highlight_augroup,
+              group = lsp_highlight_group,
               callback = vim.lsp.buf.document_highlight,
             })
 
             vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
               buffer = event.buf,
-              group = highlight_augroup,
+              group = lsp_highlight_group,
               callback = vim.lsp.buf.clear_references,
-            })
-
-            vim.api.nvim_create_autocmd("LspDetach", {
-              group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-              callback = function(event2)
-                vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
-              end,
             })
           end
 
@@ -87,6 +75,14 @@ return {
               "[T]oggle Inlay [H]ints"
             )
           end
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("LspDetach", {
+        group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+        callback = function(event)
+          vim.lsp.buf.clear_references()
+          vim.api.nvim_clear_autocmds({ group = lsp_highlight_group, buffer = event.buf })
         end,
       })
 
@@ -142,6 +138,7 @@ return {
       local servers = {
         stylua = {},
         ts_ls = {},
+        ruff = {},
         angularls = {
           cmd = get_angularls_cmd(),
           on_new_config = function(new_config) new_config.cmd = get_angularls_cmd() end,
@@ -233,10 +230,13 @@ return {
 
       local ensure_installed = {
         "angular-language-server",
+        "eslint_d",
         "intelephense",
         "json-lsp",
         "lua-language-server",
+        "prettierd",
         "pyright",
+        "ruff",
         "stylua",
         "tailwindcss-language-server",
       }
