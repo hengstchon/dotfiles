@@ -89,9 +89,9 @@ function M.setup_buffer(bufnr)
     desc = "Switch between an Angular component and its template",
   })
 
-  vim.keymap.set("n", "<leader>aa", M.alternate, {
+  vim.keymap.set("n", "<leader>co", M.alternate, {
     buffer = bufnr,
-    desc = "Angular: alternate component file",
+    desc = "Code: Angular alternate component file",
   })
 end
 

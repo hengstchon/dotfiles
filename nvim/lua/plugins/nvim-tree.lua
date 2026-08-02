@@ -1,9 +1,12 @@
--- File explorer
 return {
   "nvim-tree/nvim-tree.lua",
   keys = {
-    { "<C-n>", ":NvimTreeToggle<CR>", silent = true },
-    { "<leader>n", ":NvimTreeFindFile<CR>", silent = true },
+    {
+      "<C-b>",
+      function() require("nvim-tree.api").tree.toggle({ find_file = true, focus = true }) end,
+      desc = "Explorer: toggle file tree (with reveal)",
+      silent = true,
+    },
   },
   opts = {
     view = {
@@ -14,7 +17,7 @@ return {
     },
     on_attach = function(bufnr)
       local api = require("nvim-tree.api")
-      api.config.mappings.default_on_attach(bufnr)
+      api.map.on_attach.default(bufnr)
       vim.keymap.del("n", "<C-E>", { buffer = bufnr })
     end,
   },

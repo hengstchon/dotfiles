@@ -15,20 +15,20 @@ return {
         ---@diagnostic disable-next-line: missing-fields
         opts = {},
       },
-      {
-        "mason-org/mason-lspconfig.nvim",
-        opts = {
-          automatic_enable = false,
-        },
-      },
+      -- {
+      --   "mason-org/mason-lspconfig.nvim",
+      --   opts = {
+      --     automatic_enable = false,
+      --   },
+      -- },
       "WhoIsSethDaniel/mason-tool-installer.nvim",
       { "j-hui/fidget.nvim", opts = { notification = { window = { avoid = { "NvimTree" } } } } },
-      "hrsh7th/cmp-nvim-lsp",
+      "saghen/blink.cmp",
     },
     config = function()
       vim.o.winborder = "rounded"
 
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
       local InstallLocation = require("mason-core.installer.InstallLocation")
       local mason_registry = require("mason-registry")
       local lsp_highlight_group = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = true })
@@ -42,16 +42,26 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-          map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-          map("gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-          map("grd", vim.lsp.buf.type_definition, "[G]oto Type [D]efinition")
-          map("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
-          map("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
+          -- Navigation
+          map("gd", vim.lsp.buf.definition, "Goto Definition")
+          map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+          -- map("gi", vim.lsp.buf.implementation, "Goto Implementation")
+          -- map("gt", vim.lsp.buf.type_definition, "Goto Type Definition")
+          map("grr", function() require("fzf-lua").lsp_references() end, "Goto References")
+          -- map("K", vim.lsp.buf.hover, "Hover Documentation")
+
+          -- Code Actions (consistent with formatting under <leader>c)
+          -- map("<leader>cr", vim.lsp.buf.rename, "Rename Symbol")
+          -- map("<leader>ca", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
+          map("<leader>cd", vim.diagnostic.open_float, "Show Line Diagnostics")
+
+          -- Workspace
+          map("<leader>lwa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder")
+          map("<leader>lwr", vim.lsp.buf.remove_workspace_folder, "Workspace Remove Folder")
           map(
-            "<leader>wl",
+            "<leader>lwl",
             function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-            "[W]orkspace [L]ist Folders"
+            "Workspace List Folders"
           )
 
           if client and client:supports_method("textDocument/documentHighlight", event.buf) then
@@ -70,9 +80,9 @@ return {
 
           if client and client:supports_method("textDocument/inlayHint", event.buf) then
             map(
-              "<leader>th",
+              "<leader>ti",
               function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })) end,
-              "[T]oggle Inlay [H]ints"
+              "Toggle Inlay Hints"
             )
           end
         end,
@@ -271,7 +281,11 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>qd", vim.diagnostic.setloclist, {
+        desc = "Diagnostic: send to location list",
+        noremap = true,
+        silent = true,
+      })
     end,
   },
 }

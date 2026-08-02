@@ -21,7 +21,7 @@ vim.opt.expandtab = true -- Use spaces instead of tabs
 vim.opt.tabstop = 4 -- 1 tab == 2 spaces
 vim.opt.shiftwidth = 4 -- Shift 2 spaces when (auto)indent
 
-vim.opt.updatetime = 50 -- ms to wait for trigger an event
+vim.opt.updatetime = 200 -- ms to wait for trigger an event
 vim.opt.shortmess:append("I") -- Disable nvim intro
 
 -- Fold

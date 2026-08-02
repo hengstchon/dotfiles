@@ -11,6 +11,7 @@ local ensure_installed = {
   "vimdoc",
   "lua",
   "python",
+  "angular",
 }
 
 return {
@@ -61,7 +62,7 @@ return {
   {
     "windwp/nvim-ts-autotag",
     enabled = true,
-    ft = { "html", "xml", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte" },
+    ft = { "html", "xml", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte", "htmlangular" },
     config = function()
       -- Independent nvim-ts-autotag setup
       require("nvim-ts-autotag").setup({

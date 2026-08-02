@@ -4,10 +4,10 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     keys = {
       {
-        "<leader>fm",
+        "<leader>cf",
         function() require("conform").format({ lsp_format = "fallback" }) end,
         mode = "",
-        desc = "Format buffer",
+        desc = "Code: format buffer",
       },
     },
     config = function()
