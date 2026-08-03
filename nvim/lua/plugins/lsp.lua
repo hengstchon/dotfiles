@@ -175,6 +175,7 @@ return {
         ts_ls = {},
         ruff = {},
         angularls = {
+          workspace_required = true,
           cmd = get_angularls_cmd(),
           on_new_config = function(new_config) new_config.cmd = get_angularls_cmd() end,
         },
