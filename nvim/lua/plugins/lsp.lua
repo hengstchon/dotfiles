@@ -33,6 +33,30 @@ return {
       local mason_registry = require("mason-registry")
       local lsp_highlight_group = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = true })
 
+      local function lsp_references()
+        vim.lsp.buf.references(nil, {
+          on_list = function(list)
+            local seen = {}
+            list.items = vim.tbl_filter(function(item)
+              local key = table.concat({
+                vim.fs.normalize(item.filename or ""),
+                item.lnum or 0,
+                item.col or 0,
+                item.end_lnum or item.lnum or 0,
+                item.end_col or item.col or 0,
+              }, "\0")
+
+              if seen[key] then return false end
+              seen[key] = true
+              return true
+            end, list.items)
+
+            vim.fn.setloclist(0, {}, " ", list)
+            require("fzf-lua").loclist({ prompt = "References❯ " })
+          end,
+        })
+      end
+
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
         callback = function(event)
@@ -47,7 +71,7 @@ return {
           map("gD", vim.lsp.buf.declaration, "Goto Declaration")
           -- map("gi", vim.lsp.buf.implementation, "Goto Implementation")
           -- map("gt", vim.lsp.buf.type_definition, "Goto Type Definition")
-          map("grr", function() require("fzf-lua").lsp_references() end, "Goto References")
+          map("grr", lsp_references, "Goto References")
           -- map("K", vim.lsp.buf.hover, "Hover Documentation")
 
           -- Code Actions (consistent with formatting under <leader>c)
