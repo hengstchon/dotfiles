@@ -42,9 +42,6 @@ ghostty = "~/.config/ghostty"
 # create folder symlink instead of files symlink
 karabiner = { type = "symbolic", target="~/.config/karabiner", recurse = false }
 
-[phoenix.files]
-phoenix = "~/.config/phoenix"
-
 [mpv.files]
 mpv = "~/.config/mpv"
 
