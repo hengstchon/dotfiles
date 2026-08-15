@@ -1,112 +1,70 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# =============================================================================
+# .zshrc — managed by dotter (repo: ~/.dotfiles/zsh/zshrc)
+# Plugin management: antidote (https://antidote.sh)
+#   bundles are listed in ~/.zsh_plugins.txt (repo: zsh/zsh_plugins.txt)
+# Prompt: starship (replaces the omz theme, which starship already overrode)
+# =============================================================================
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# ---- locale / editor -------------------------------------------------------
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export EDITOR='nvim'
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="{{zsh_theme}}"
+# ---- PATH ------------------------------------------------------------------
+export PNPM_HOME="$HOME/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$HOME/.local/bin:$PATH"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-git
-macos
-colored-man-pages
-vi-mode
-extract
-fzf
-zsh-autosuggestions
-zsh-syntax-highlighting
-# zsh-proxy
-)
-
+# ---- Homebrew shell completions (must come before compinit) ----------------
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    # https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
-source $ZSH/oh-my-zsh.sh
+# ---- antidote --------------------------------------------------------------
+# Install with: brew install antidote
+#   or: git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
+if [[ -f /opt/homebrew/opt/antidote/share/antidote/antidote.zsh ]]; then
+    source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+elif [[ -f ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh ]]; then
+    source ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh
+fi
 
-# User configuration
+# Load bundles from ~/.zsh_plugins.txt.
+# Regenerates the static file ~/.zsh_plugins.zsh only when the txt changes.
+#
+# Some plugins (e.g. the omz git plugin) call `compdef` at load time, before
+# compinit has run. Queue those calls and replay them once compinit runs.
+# (snippet by mattmc3, the antidote author — antidote issue #186)
+typeset -gHa __my_compdef_queue=()
+function compdef {
+  (( $# )) || return
+  local compdef_args=("${@[@]}")
+  __my_compdef_queue+=("$(typeset -p compdef_args)")
+}
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Wrap compinit temporarily so that when the real compinit call happens and
+# compdef is defined, the queue of compdef calls is processed.
+function compinit {
+  unfunction compinit compdef &>/dev/null
+  autoload -Uz compinit && compinit "$@"
+  local typedef_compdef_args
+  for typedef_compdef_args in $__my_compdef_queue; do
+    eval $typedef_compdef_args
+    compdef "$compdef_args[@]"
+  done
+  unset __my_compdef_queue
+}
 
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+antidote load
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-export EDITOR='nvim'
+# ---- completion ------------------------------------------------------------
+mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"   # compinit won't create this dir
+autoload -Uz compinit
+compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# ---- vi mode (replaces the omz vi-mode plugin) -----------------------------
+bindkey -v
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select {
@@ -127,17 +85,22 @@ zle-line-init() {
 }
 zle -N zle-line-init
 
+# Keybindings previously provided by the omz vi-mode plugin
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'vv' edit-command-line    # vv: edit the command line in $EDITOR
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^R' history-incremental-search-backward
+bindkey '^S' history-incremental-search-forward
+stty -ixon                                # let ^S reach zsh instead of pausing output
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+
 bindkey -M viins '^F' forward-char
 bindkey -M viins '^B' backward-char
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# ---- aliases ---------------------------------------------------------------
 alias ra=yazi
 alias v=nvim
 alias lg=lazygit
@@ -145,27 +108,12 @@ alias lg=lazygit
 alias yt-dlp-de="yt-dlp -S 'res:720' --merge-output-format mkv --write-subs --write-auto-subs --sub-langs de,deu,de-DE,zh"
 alias mpv-de="mpv --secondary-sid=auto --secondary-sub-pos=90"
 
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-# pnpm end
-
-# cargo
-export PATH="$PATH:$HOME/.cargo/bin"
-
-# local bin
-export PATH="$HOME/.local/bin:$PATH"
-
-# zoxide
+# ---- tools -----------------------------------------------------------------
 eval "$(zoxide init zsh)"
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# starship
+eval "$(fzf --zsh)"   # fzf >= 0.48; replaces the omz fzf plugin and ~/.fzf.zsh
 eval "$(starship init zsh)"
 
-# work
+# ---- work ------------------------------------------------------------------
 if [ -f "$HOME/work.sh" ]; then
     source "$HOME/work.sh"
 fi

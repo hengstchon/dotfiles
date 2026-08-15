@@ -28,8 +28,6 @@ packages = [
 `.dotter/local.toml` example:
 
 ```toml
-includes = [".dotter/include/mba.toml"]
-
 packages = [
 # shell
 "git", "zsh", "tmux", "neovim", "ranger",
@@ -46,23 +44,16 @@ git_email = "xxx"
 
 ### zsh
 
-Install `zsh-autosuggestions`:
+Install [antidote](https://antidote.sh) (plugin manager):
 
 ```shell
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+brew install antidote
 ```
 
-Install `zsh-syntax-highlighting`:
-
-```shell
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-```
-
-Install `zsh-proxy`:
-
-```shell
-git clone https://github.com/sukkaw/zsh-proxy.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-proxy
-```
+Bundles are declared in `zsh/zsh_plugins.txt` (deployed to
+`~/.zsh_plugins.txt`). On the first shell start, antidote clones the plugins
+into its cache and generates the static load file `~/.zsh_plugins.zsh`
+automatically — just edit `zsh/zsh_plugins.txt` and open a new shell.
 
 ### ranger
 
