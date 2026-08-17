@@ -5,13 +5,7 @@
 # file changes. Edit here, then open a new shell.
 # =============================================================================
 
-# git aliases/functions (the only Oh My Zsh piece kept; antidote sources just
-# this one plugin file — no omz framework, theme system, or update machinery)
-ohmyzsh/ohmyzsh path:plugins/git
-
-# community zsh completions (replaces the completions omz used to bundle)
-zsh-users/zsh-completions kind:fpath path:src
-
+Aloxaf/fzf-tab
 zsh-users/zsh-autosuggestions
 # NOTE: zsh-syntax-highlighting must be the LAST bundle
 zsh-users/zsh-syntax-highlighting

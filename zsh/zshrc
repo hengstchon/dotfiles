@@ -16,96 +16,81 @@ export PATH="$PNPM_HOME:$PATH"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$HOME/.local/bin:$PATH"
 
-# ---- Homebrew shell completions (must come before compinit) ----------------
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-fi
-
 # ---- antidote --------------------------------------------------------------
 # Install with: brew install antidote
-#   or: git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
-if [[ -f /opt/homebrew/opt/antidote/share/antidote/antidote.zsh ]]; then
-    source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+#   or: git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-$HOME}/.antidote
+if [[ -f $HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh ]]; then
+    source $HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh
 elif [[ -f ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh ]]; then
     source ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh
 fi
 
-# Load bundles from ~/.zsh_plugins.txt.
-# Regenerates the static file ~/.zsh_plugins.zsh only when the txt changes.
-#
-# Some plugins (e.g. the omz git plugin) call `compdef` at load time, before
-# compinit has run. Queue those calls and replay them once compinit runs.
-# (snippet by mattmc3, the antidote author — antidote issue #186)
-typeset -gHa __my_compdef_queue=()
-function compdef {
-  (( $# )) || return
-  local compdef_args=("${@[@]}")
-  __my_compdef_queue+=("$(typeset -p compdef_args)")
-}
-
-# Wrap compinit temporarily so that when the real compinit call happens and
-# compdef is defined, the queue of compdef calls is processed.
-function compinit {
-  unfunction compinit compdef &>/dev/null
-  autoload -Uz compinit && compinit "$@"
-  local typedef_compdef_args
-  for typedef_compdef_args in $__my_compdef_queue; do
-    eval $typedef_compdef_args
-    compdef "$compdef_args[@]"
-  done
-  unset __my_compdef_queue
-}
-
+# initialize plugins statically with ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 antidote load
 
 # ---- completion ------------------------------------------------------------
-mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"   # compinit won't create this dir
 autoload -Uz compinit
-compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+compinit
 
 # ---- vi mode (replaces the omz vi-mode plugin) -----------------------------
 bindkey -v
+KEYTIMEOUT=20  # 200ms;
 
-# Change cursor shape for different vi modes.
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[2 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[6 q'
-  fi
+autoload -Uz add-zle-hook-widget edit-command-line
+zle -N edit-command-line
+
+_dotfiles_vi_keymap_select() {
+  case $KEYMAP in
+    vicmd|visual)
+      printf '\e[2 q'  # steady block
+      ;;
+    viins|main)
+      printf '\e[6 q'  # steady bar
+      ;;
+  esac
 }
-zle -N zle-keymap-select
-zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[6 q"
+
+_dotfiles_vi_line_init() {
+  zle -K viins
+  printf '\e[6 q'
 }
-zle -N zle-line-init
+
+_dotfiles_vi_line_finish() {
+  printf '\e[6 q'
+}
+
+add-zle-hook-widget zle-keymap-select _dotfiles_vi_keymap_select
+add-zle-hook-widget zle-line-init      _dotfiles_vi_line_init
+add-zle-hook-widget zle-line-finish    _dotfiles_vi_line_finish
 
 # Keybindings previously provided by the omz vi-mode plugin
-autoload -Uz edit-command-line
-zle -N edit-command-line
 bindkey -M vicmd 'vv' edit-command-line    # vv: edit the command line in $EDITOR
-bindkey '^P' up-history
-bindkey '^N' down-history
-bindkey '^R' history-incremental-search-backward
-bindkey '^S' history-incremental-search-forward
-stty -ixon                                # let ^S reach zsh instead of pausing output
-bindkey '^A' beginning-of-line
-bindkey '^E' end-of-line
 
+bindkey -M viins '^P' up-history
+bindkey -M viins '^N' down-history
+bindkey -M viins '^A' beginning-of-line
+bindkey -M viins '^E' end-of-line
 bindkey -M viins '^F' forward-char
 bindkey -M viins '^B' backward-char
 
 # ---- aliases ---------------------------------------------------------------
+alias g='git'
+alias gst='git status'
+alias gp='git push'
+alias gpf='git push --force-with-lease --force-if-includes'
+alias gl='git pull'
+alias gaa='git add --all'
+alias gco='git checkout'
+alias gd='git diff'
+alias gcm='git commit -m'
+alias glog='git log --oneline --decorate --graph'
+alias gfa='git fetch --all --prune'
+alias gbgD='LANG=C git branch --no-color -vv | grep ": gone\]" | cut -c 3- | awk '"'"'{print $1}'"'"' | xargs git branch -D'
+
 alias ra=yazi
 alias v=nvim
 alias lg=lazygit
-# https://github.com/yt-dlp/yt-dlp/issues/630#issuecomment-893659460
-alias yt-dlp-de="yt-dlp -S 'res:720' --merge-output-format mkv --write-subs --write-auto-subs --sub-langs de,deu,de-DE,zh"
+alias yt-dlp-de="yt-dlp -S 'res:720' --merge-output-format mkv --write-subs --write-auto-subs --sub-langs de,deu,de-DE,zh"  # https://github.com/yt-dlp/yt-dlp/issues/630#issuecomment-893659460
 alias mpv-de="mpv --secondary-sid=auto --secondary-sub-pos=90"
 
 # ---- tools -----------------------------------------------------------------
