@@ -5,6 +5,7 @@
 [core]
 	editor = nvim
     pager = delta
+    excludesfile = ~/.gitignore
 
 [init]
 	defaultBranch = main
@@ -25,3 +26,11 @@
 [credential]
 	helper = {{git_credential}}
 
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[rerere]
+    enable = true
