@@ -109,6 +109,10 @@ eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"   # fzf >= 0.48; replaces the omz fzf plugin and ~/.fzf.zsh
 eval "$(starship init zsh)"
 
+if (( $+commands[wt] )); then
+    eval "$(command wt config shell init zsh)"
+fi
+
 # ---- work ------------------------------------------------------------------
 if [ -f "$HOME/work.sh" ]; then
     source "$HOME/work.sh"
