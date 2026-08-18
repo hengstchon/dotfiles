@@ -245,7 +245,7 @@ run = ['layout floating']
 
 # terminal
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghossty'
+if.app-id = 'com.mitchellh.ghostty'
 run = ['move-node-to-workspace 2']
 
 # obsidian
